@@ -19,7 +19,6 @@ function searchAPI (search) {
 
 //Fetch Request
    fetch(FINAL_URL)
-    
     .then(res => {
      return res.json(); 
     })
@@ -44,7 +43,7 @@ document.querySelector('#result-list').innerHTML = html.join('');
 //Add like button to the DOM
 const allLikeButtons = document.querySelectorAll('#like')
 
-//To toggle the 'like' button 
+//To toggle the 'like' button on every search result
 allLikeButtons.forEach((button) => {
    button.addEventListener('click', function() {
        button.classList.toggle('second')
