@@ -1,29 +1,30 @@
 // API Documentation: https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html#//apple_ref/doc/uid/TP40017632-CH3-SW1
 
-
-//Submit form (Search Bar)
+//DOMContentLoaded for the submit form from index.html
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('form').addEventListener('submit', (e) => {
         e.preventDefault()
         searchAPI(e.target.text_search.value)
     })
 })
-//Fetch request and innerHTML for the results after submit form is submitted
+//Add user input to the DOM
 function searchAPI (search) {
     let p = document.createElement('p')
     p.textContent = search
 
+//API URL 
     const BASE_URL = "https://itunes.apple.com/search?"
     let SEARCH_PATH = search
     let FINAL_URL = `${BASE_URL}term=${SEARCH_PATH}&media=music&limit=20`
 
+//Fetch Request
    fetch(FINAL_URL)
     
     .then(res => {
      return res.json(); 
     })
-   .then(data => {
-        const html = data.results      
+   .then(json => {
+        const html = json.results      
         .map(searchTerm => {
             return `
             <div class="musician">
@@ -37,12 +38,13 @@ function searchAPI (search) {
             </div>
             `
         })
-        
-    document.querySelector('#result-list').innerHTML = html.join('');
-    
-//To toggle the 'like' button 
+//Add search results to the DOM
+document.querySelector('#result-list').innerHTML = html.join('');
+
+//Add like button to the DOM
 const allLikeButtons = document.querySelectorAll('#like')
 
+//To toggle the 'like' button 
 allLikeButtons.forEach((button) => {
    button.addEventListener('click', function() {
        button.classList.toggle('second')
